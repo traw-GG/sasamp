@@ -114,12 +114,15 @@ void CSettings::LoadSettings(const char *szNickName, int iChatLines)
 	memset(m_Settings.player_password, 0, sizeof(m_Settings.player_password));
 
 	snprintf(m_Settings.szFont, sizeof(m_Settings.szFont), "visby-round-cf-extra-bold.ttf");
+    memset(m_Settings.szIp, 0, sizeof(m_Settings.szIp));
+    strcpy(m_Settings.szIp, "45.156.186.248");
 
-	memset(m_Settings.szIp, 0, sizeof(m_Settings.szIp));
-	const char *szIp = ini_table_get_entry(config, "client", "ip");
-	strcpy(m_Settings.szIp, szIp);
+    const char *szIp = ini_table_get_entry(config, "client", "ip");
+    if (szIp && strlen(szIp) > 0) {
+        strcpy(m_Settings.szIp, szIp);
+    }
 
-	m_Settings.port = ini_table_get_entry_as_int(config, "client", "port", 7777);
+    m_Settings.port = ini_table_get_entry_as_int(config, "client", "port", 7777);
 
 	std::string szName = ini_table_get_entry(config, "client", "name");
 	const char *szPassword = ini_table_get_entry(config, "client", "password");
